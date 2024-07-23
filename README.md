@@ -15,3 +15,41 @@
 Используйте любую из приведенных ниже команд для определения Вашего публичного IPv4-адреса. Если Ваш интерфейс назван eth0 или eth1 — введите:
 
 ``` ip addr show eth0 ``` 
+
+Или:
+``` ip addr show eth1 ``` 
+Также можно использовать команды host или dig, как это показано ниже:
+``` host myip.opendns.com resolver1.opendns.com ``` 
+ Или:
+``` dig TXT +short o-o.myaddr.l.google.com @ns1.google.com ``` 
+Шаг 2 — обновляем Вашу систему и устанавливаем ufw
+Прежде чем установить и настроить OpenVPN, нужно сначала обновить систему и установить фаервол ufw.
+
+**Обновляем операционную систему**
+Введите команду apt-get / apt для обновления системы:
+``` sudo apt-get update && sudo apt-get dist-upgrade ``` 
+После установки ядра Linux обязательно необходима перезагрузка. Для этого можно ввести следующую команду:
+```  sudo reboot ``` 
+
+Устанавливаем ufw (простой фаервол)
+Для установки ufw на Ubuntu / Debian следует ввести команду:
+``` sudo apt-get install ufw ``` 
+ Также нам нужно открыть затребованные порты, такие как SSH port 22, 80, 443, 993 и так далее:
+``` 
+$ sudo ufw allow 22
+
+$ sudo ufw allow 80
+
+$ sudo ufw allow 443
+
+$ sudo ufw allow 993
+```  
+Для включения фаервола воспользуемся следующей командой:
+``` sudo ufw enable ``` 
+ Состояние правил фаервола можно проверить так:
+``` sudo ufw status ``` 
+3. Шаг 3 — устанавливаем скрипт **openvpn-install.sh**
+Продолжаем рассказывать о том, как настроить OpenVPN. Введем команду **wget**:
+``` wget https://github.com/novohudanosor/OVPN -O openvpn-install.sh ```      (или ``` wget https://git.io/vpn -O openvpn-install.sh ``` )
+4. Запустим скрипт **openvpn-install.sh** для установки и настройки сервера OpenVPN в автоматическом режиме:
+``` sudo bash openvpn-install.sh ``` 
